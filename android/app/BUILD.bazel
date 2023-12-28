@@ -1,0 +1,12 @@
+load("@rules_android//android:rules.bzl", "android_binary")
+
+# An app that consumes android-kt deps
+android_binary(
+    name = "compose_app",
+    custom_package = "pro.herlian.vihara",
+    manifest = "AndroidManifest.xml",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//android/compose-ui:lib",
+    ],
+)

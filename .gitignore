@@ -1,0 +1,12 @@
+*~
+bazel-*
+.idea
+# Eclipse
+.project
+.classpath
+.settings/
+# Maven
+target/
+# Xcode
+*.xcodeproj
+node_modules
