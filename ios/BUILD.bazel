@@ -1,0 +1,45 @@
+load("@rules_xcodeproj//xcodeproj:defs.bzl", "top_level_target", "xcodeproj")
+load(
+  "@rules_apple//apple:ios.bzl",
+  "ios_application",
+  "ios_unit_test",
+)
+load("@rules_swift//swift:swift.bzl", "swift_library")
+
+xcodeproj(
+    name = "xcodeproj",
+    project_name = "App",
+    tags = ["manual"],
+    top_level_targets = [
+        ":iOSApp",
+    ],
+)
+
+ios_application(
+    name = "iOSApp",
+    bundle_id = "pro.herlian.vihara",
+    families = ["iphone", "ipad"],
+    infoplists = ["Resources/Info.plist"],
+    minimum_os_version = "15.0",
+    visibility = ["//visibility:public"],
+    deps = [":Lib"],
+)
+
+swift_library(
+    name = "Lib",
+    srcs = glob(["Sources/*.swift"]),
+)
+
+ios_unit_test(
+    name = "Tests",
+    bundle_id = "com.example.tests",
+    minimum_os_version = "15.0",
+    test_host = ":App",
+    visibility = ["//visibility:public"],
+    deps = [":TestLib"],
+)
+
+swift_library(
+    name = "TestLib",
+    srcs = glob(["test/*.swift"]),
+)

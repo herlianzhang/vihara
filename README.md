@@ -17,3 +17,11 @@ To Run
 
 To open on Android Studio IDE
 install this [plugin](https://plugins.jetbrains.com/plugin/9185-bazel-for-android-studio)
+
+# iOS Setup
+
+To Generate xcodeproj
+`bazel run //ios:xcodeproj`
+
+To Run Directly
+`bazel run //ios:iOSApp`
