@@ -1,0 +1,3 @@
+workspace(name = "pro_herlian_vihara")
+
+android_sdk_repository(name = "androidsdk")

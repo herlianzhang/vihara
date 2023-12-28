@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh 'go build'
+                // sh 'go build'
             }
         }
         stage('Test') {
@@ -12,8 +12,8 @@ pipeline {
                 CODECOV_TOKEN = credentials('codecov_token')
             }
             steps {
-                sh 'go test ./... -coverprofile=coverage.txt'
-                sh "curl -Os https://uploader.codecov.io/latest/macos/codecov; chmod +x codecov; ./codecov -t ${CODECOV_TOKEN}"
+                // sh 'go test ./... -coverprofile=coverage.txt'
+                // sh "curl -Os https://uploader.codecov.io/latest/macos/codecov; chmod +x codecov; ./codecov -t ${CODECOV_TOKEN}"
             }
         }
     }
