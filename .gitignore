@@ -1,11 +1,13 @@
 *~
+MODULE.bazel.lock
 bazel-*
 .idea
 # Eclipse
 .project
 .classpath
 .settings/
-# Maven
+# Android
+.aswb
 target/
 # Xcode
 *.xcodeproj
