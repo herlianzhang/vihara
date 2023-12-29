@@ -3,7 +3,7 @@ load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
 kt_android_library(
     name = "lib",
     srcs = [
-        "MainActivity.kt"
+        "MainActivity.kt",
     ],
     custom_package = "pro.herlian.vihara.ui",
     manifest = "AndroidManifest.xml",

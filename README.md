@@ -25,3 +25,11 @@ To Generate xcodeproj
 
 To Run Directly
 `bazel run //ios:iOSApp`
+
+# Backend
+
+To Generate Build file
+`bazel run //backend:gazelle`
+
+To Run
+`bazel run //backend`

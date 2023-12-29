@@ -1,8 +1,8 @@
 load("@rules_xcodeproj//xcodeproj:defs.bzl", "top_level_target", "xcodeproj")
 load(
-  "@rules_apple//apple:ios.bzl",
-  "ios_application",
-  "ios_unit_test",
+    "@rules_apple//apple:ios.bzl",
+    "ios_application",
+    "ios_unit_test",
 )
 load("@rules_swift//swift:swift.bzl", "swift_library")
 
@@ -18,7 +18,10 @@ xcodeproj(
 ios_application(
     name = "iOSApp",
     bundle_id = "pro.herlian.vihara",
-    families = ["iphone", "ipad"],
+    families = [
+        "iphone",
+        "ipad",
+    ],
     infoplists = ["Resources/Info.plist"],
     minimum_os_version = "15.0",
     visibility = ["//visibility:public"],
