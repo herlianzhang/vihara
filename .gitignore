@@ -12,3 +12,5 @@ target/
 # Xcode
 *.xcodeproj
 node_modules
+# Go
+go.sum
