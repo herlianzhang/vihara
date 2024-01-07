@@ -1,41 +1,51 @@
-load("@rules_xcodeproj//xcodeproj:defs.bzl", "top_level_target", "xcodeproj")
 load(
-    "@rules_apple//apple:ios.bzl",
-    "ios_application",
+    "@rules_xcodeproj//xcodeproj:defs.bzl", 
+    "top_level_target", 
+    "xcodeproj",
+    "xcode_provisioning_profile",
+)
+load(
+    "@build_bazel_rules_apple//apple:ios.bzl",
     "ios_unit_test",
 )
+load("@build_bazel_rules_apple//apple:apple.bzl", 
+    "local_provisioning_profile")
 load("@rules_swift//swift:swift.bzl", "swift_library")
+load(":Extension.bzl", "ios_app", "team_id")
 
 xcodeproj(
     name = "xcodeproj",
     project_name = "App",
     tags = ["manual"],
     top_level_targets = [
-        ":iOSApp",
+        top_level_target(
+            ":App",
+            target_environments = ["device", "simulator"],
+        ),
+        ":Tests"
     ],
+    scheme_autogeneration_mode = "all",
 )
 
-ios_application(
-    name = "iOSApp",
-    bundle_id = "pro.herlian.vihara",
-    families = [
-        "iphone",
-        "ipad",
-    ],
-    infoplists = ["Resources/Info.plist"],
-    minimum_os_version = "15.0",
-    visibility = ["//visibility:public"],
-    deps = [":Lib"],
+ios_app(
+    name = "App",
+    provisioning_profile = ":xcode_development_profile",
+)
+
+ios_app(
+    name = "DeployApp",
+    provisioning_profile = ":xcode_appstore_profile",
 )
 
 swift_library(
     name = "Lib",
     srcs = glob(["Sources/*.swift"]),
+    tags = ["manual"],
 )
 
 ios_unit_test(
     name = "Tests",
-    bundle_id = "com.example.tests",
+    bundle_id = "pro.herlian.vihara.tests",
     minimum_os_version = "15.0",
     test_host = ":App",
     visibility = ["//visibility:public"],
@@ -45,4 +55,34 @@ ios_unit_test(
 swift_library(
     name = "TestLib",
     srcs = glob(["test/*.swift"]),
+    tags = ["manual"],
+    testonly = True,
+)
+
+# AppStore Profile
+local_provisioning_profile(
+    name = "local_appstore_profile",
+    profile_name = "match AppStore pro.herlian.vihara",
+    team_id = team_id,
+)
+
+xcode_provisioning_profile(
+   name = "xcode_appstore_profile",
+   team_id = team_id,
+   managed_by_xcode = True,
+   provisioning_profile = ":local_appstore_profile",
+)
+
+# Development Profile
+local_provisioning_profile(
+    name = "local_development_profile",
+    profile_name = "match Development pro.herlian.vihara",
+    team_id = team_id,
+)
+
+xcode_provisioning_profile(
+   name = "xcode_development_profile",
+   team_id = team_id,
+   managed_by_xcode = True,
+   provisioning_profile = ":local_development_profile",
 )

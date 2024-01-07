@@ -2,6 +2,9 @@
 MODULE.bazel.lock
 bazel-*
 .idea
+.DS_Store
+Gemfile.lock
+**/fastlane/report.xml
 # Eclipse
 .project
 .classpath
