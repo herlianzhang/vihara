@@ -12,11 +12,12 @@ pipeline {
                 #!/bin/zsh
                 source ~/.bash_profile
                 cd ios
-                fastlane update_build_number
+                fastlane sign_to_appconnect
+                fastlane update_build_number_for_testflight
                 cd ..
                 bazel build --compilation_mode=opt --cpu=ios_arm64 --output_groups=+dsyms --define=apple.package_swift_support=yes //ios:DeployApp
                 cd ios
-                fastlane upload_app
+                fastlane upload_app_to_testflight
                 '''
             }
         }

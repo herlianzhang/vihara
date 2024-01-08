@@ -17,24 +17,30 @@ default_platform(:ios)
 
 platform :ios do
   desc "Description of what the lane does"
-  lane :upload_app do
-    app_store_connect_api_key(
-      key_id: ENV['KEY_ID'],
-      issuer_id: ENV['ISSUER_ID'],
-      key_filepath: ENV['API_KEY_PATH']
-    )
-
+  lane :upload_app_to_testflight do
     upload_to_testflight(
       app_platform: "ios",
       ipa: "../bazel-bin/ios/DeployApp.ipa",
     )
   end
 
-  lane :update_build_number do
+  lane :update_build_number_for_testflight do
+    last_num = latest_testflight_build_number(
+      app_identifier: "pro.herlian.vihara"
+    )
+
     set_info_plist_value(
       path: "Resources/Info.plist",
       key: "CFBundleVersion",
-      value: "3"
+      value: (last_num + 1).to_s
+    )
+  end
+
+  lane :sign_to_appconnect do
+    app_store_connect_api_key(
+      key_id: ENV['KEY_ID'],
+      issuer_id: ENV['ISSUER_ID'],
+      key_filepath: ENV['API_KEY_PATH']
     )
   end
 end
