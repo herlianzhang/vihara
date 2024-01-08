@@ -26,6 +26,14 @@ To Generate xcodeproj
 To Run Directly
 `bazel run //ios:iOSApp`
 
+To Build signed ipa
+`bazel build \           
+  --compilation_mode=opt \
+  --cpu=ios_arm64 \
+  --output_groups=+dsyms \
+  --define=apple.package_swift_support=yes \
+  //ios:DeployApp`
+
 # Backend
 
 To Generate Build file
