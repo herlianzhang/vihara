@@ -15,18 +15,26 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios upload_app
+### ios upload_app_to_testflight
 
 ```sh
-[bundle exec] fastlane ios upload_app
+[bundle exec] fastlane ios upload_app_to_testflight
 ```
 
 Description of what the lane does
 
-### ios update_build_number
+### ios update_build_number_for_testflight
 
 ```sh
-[bundle exec] fastlane ios update_build_number
+[bundle exec] fastlane ios update_build_number_for_testflight
+```
+
+
+
+### ios sign_to_appconnect
+
+```sh
+[bundle exec] fastlane ios sign_to_appconnect
 ```
 
 

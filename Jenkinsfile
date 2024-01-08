@@ -6,13 +6,13 @@ pipeline {
             environment {
                 KEY_ID = credentials('key_id')
                 ISSUER_ID = credentials('issuer_id')
+                APP_IDENTIFIER = "pro.herlian.vihara"
             }
             steps {
                 sh '''
                 #!/bin/zsh
                 source ~/.bash_profile
                 cd ios
-                fastlane sign_to_appconnect
                 fastlane update_build_number_for_testflight
                 cd ..
                 bazel build --compilation_mode=opt --cpu=ios_arm64 --output_groups=+dsyms --define=apple.package_swift_support=yes //ios:DeployApp

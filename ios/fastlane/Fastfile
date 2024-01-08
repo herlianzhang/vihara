@@ -18,6 +18,8 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :upload_app_to_testflight do
+    sign_to_appconnect
+
     upload_to_testflight(
       app_platform: "ios",
       ipa: "../bazel-bin/ios/DeployApp.ipa",
@@ -25,8 +27,10 @@ platform :ios do
   end
 
   lane :update_build_number_for_testflight do
+    sign_to_appconnect
+
     last_num = latest_testflight_build_number(
-      app_identifier: "pro.herlian.vihara"
+      app_identifier: ENV['APP_IDENTIFIER'],
     )
 
     set_info_plist_value(
