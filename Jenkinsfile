@@ -3,6 +3,30 @@ pipeline {
     tools { go 'go-1.21' }
     stages {
         stage('Build') {
+            steps {
+                sh '''
+                #!/bin/zsh
+                source ~/.jenkins_profile
+                cd backend
+                bazel run @io_bazel_rules_go//go -- mod tidy -v
+                cd ..
+                bazel build //...
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+                #!/bin/zsh
+                source ~/.jenkins_profile
+                bazel test //...
+                '''
+            }
+        }
+        stage('Deploy') {
+            when { 
+                expression { env.BRANCH_NAME == 'main' }
+            }
             environment {
                 KEY_ID = credentials('key_id')
                 ISSUER_ID = credentials('issuer_id')
@@ -11,7 +35,7 @@ pipeline {
             steps {
                 sh '''
                 #!/bin/zsh
-                source ~/.bash_profile
+                source ~/.jenkins_profile
                 cd ios
                 fastlane update_build_number_for_testflight
                 cd ..
