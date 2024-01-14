@@ -9,7 +9,9 @@ load(
     "ios_unit_test",
 )
 load("@build_bazel_rules_apple//apple:apple.bzl", 
-    "local_provisioning_profile")
+    "local_provisioning_profile",
+    "apple_dynamic_xcframework_import"
+)
 load("@rules_swift//swift:swift.bzl", "swift_library")
 load(":Extension.bzl", "ios_app", "team_id")
 
@@ -41,6 +43,23 @@ swift_library(
     name = "Lib",
     srcs = glob(["Sources/*.swift"]),
     tags = ["manual"],
+    data = [
+        "Resources/Vihara.plist",
+    ],
+    deps = [
+        ":Alamofire",
+        ":AppAuth",
+    ]
+)
+
+apple_dynamic_xcframework_import(
+    name = "Alamofire",
+    xcframework_imports = glob(["Carthage/Build/Alamofire.xcframework/**"]),
+)
+
+apple_dynamic_xcframework_import(
+    name = "AppAuth",
+    xcframework_imports = glob(["Carthage/Build/AppAuth.xcframework/**"]),
 )
 
 ios_unit_test(
