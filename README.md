@@ -19,6 +19,8 @@ To open on Android Studio IDE
 install this [plugin](https://plugins.jetbrains.com/plugin/9185-bazel-for-android-studio)
 
 # iOS Setup
+To install Carthage dependencies (on iOS folder)
+`carthage bootstrap --use-xcframeworks --platform iOS`
 
 To Generate xcodeproj
 `bazel run //ios:xcodeproj`

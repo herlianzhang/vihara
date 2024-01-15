@@ -16,9 +16,12 @@ def ios_app(
         families = [
             "iphone",
         ],
+        launch_storyboard = "Resources/LaunchScreen.storyboard",
         infoplists = ["Resources/Info.plist"],
         minimum_os_version = "15.0",
         visibility = ["//visibility:public"],
-        deps = [":Lib"],
-        provisioning_profile = ":xcode_appstore_profile",
+        deps = [
+            ":Lib",
+        ],
+        provisioning_profile = provisioning_profile,
     )
