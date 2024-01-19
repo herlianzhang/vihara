@@ -21,7 +21,7 @@ final class UserAuth: ObservableObject {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     private let authStateKey: String = "authState"
-    private let suiteName: String = "pro.herlian.vihara"
+    private let suiteName: String = "vihara.auth"
 
     init() {
         loadState()

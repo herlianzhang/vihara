@@ -9,7 +9,11 @@ go_library(
     srcs = ["main.go"],
     importpath = "pro.herlian/vihara",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_gin_gonic_gin//:gin"],
+    deps = [
+        "@com_github_gin_gonic_gin//:gin",
+        "@com_github_golang_jwt_jwt_v5//:jwt",
+        "@com_github_lestrrat_go_jwx_v2//jwk",
+    ],
 )
 
 go_binary(
