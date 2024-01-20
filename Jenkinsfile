@@ -7,8 +7,11 @@ pipeline {
                 sh '''
                 #!/bin/zsh
                 source ~/.jenkins_profile
+                cd ios
+                carthage bootstrap --use-xcframeworks --platform iOS
+                cd ..
                 cd backend
-                bazel run @io_bazel_rules_go//go -- mod tidy -v
+                bazel run @io_bazel_rules_go//go mod tidy
                 cd ..
                 bazel build //...
                 '''

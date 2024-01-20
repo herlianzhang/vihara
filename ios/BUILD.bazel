@@ -1,16 +1,17 @@
 load(
-    "@rules_xcodeproj//xcodeproj:defs.bzl", 
-    "top_level_target", 
-    "xcodeproj",
+    "@rules_xcodeproj//xcodeproj:defs.bzl",
+    "top_level_target",
     "xcode_provisioning_profile",
+    "xcodeproj",
 )
 load(
     "@build_bazel_rules_apple//apple:ios.bzl",
     "ios_unit_test",
 )
-load("@build_bazel_rules_apple//apple:apple.bzl", 
+load(
+    "@build_bazel_rules_apple//apple:apple.bzl",
+    "apple_dynamic_xcframework_import",
     "local_provisioning_profile",
-    "apple_dynamic_xcframework_import"
 )
 load("@rules_swift//swift:swift.bzl", "swift_library")
 load(":Extension.bzl", "ios_app", "team_id")
@@ -18,15 +19,18 @@ load(":Extension.bzl", "ios_app", "team_id")
 xcodeproj(
     name = "xcodeproj",
     project_name = "App",
+    scheme_autogeneration_mode = "all",
     tags = ["manual"],
     top_level_targets = [
         top_level_target(
             ":App",
-            target_environments = ["device", "simulator"],
+            target_environments = [
+                "device",
+                "simulator",
+            ],
         ),
-        ":Tests"
+        ":Tests",
     ],
-    scheme_autogeneration_mode = "all",
 )
 
 ios_app(
@@ -42,23 +46,25 @@ ios_app(
 swift_library(
     name = "Lib",
     srcs = glob(["Sources/*.swift"]),
-    tags = ["manual"],
     data = [
         "Resources/Vihara.plist",
     ],
+    tags = ["manual"],
     deps = [
         ":Alamofire",
         ":AppAuth",
-    ]
+    ],
 )
 
 apple_dynamic_xcframework_import(
     name = "Alamofire",
+    tags = ["manual"],
     xcframework_imports = glob(["Carthage/Build/Alamofire.xcframework/**"]),
 )
 
 apple_dynamic_xcframework_import(
     name = "AppAuth",
+    tags = ["manual"],
     xcframework_imports = glob(["Carthage/Build/AppAuth.xcframework/**"]),
 )
 
@@ -73,9 +79,9 @@ ios_unit_test(
 
 swift_library(
     name = "TestLib",
+    testonly = True,
     srcs = glob(["test/*.swift"]),
     tags = ["manual"],
-    testonly = True,
 )
 
 # AppStore Profile
@@ -86,10 +92,10 @@ local_provisioning_profile(
 )
 
 xcode_provisioning_profile(
-   name = "xcode_appstore_profile",
-   team_id = team_id,
-   managed_by_xcode = True,
-   provisioning_profile = ":local_appstore_profile",
+    name = "xcode_appstore_profile",
+    managed_by_xcode = True,
+    provisioning_profile = ":local_appstore_profile",
+    team_id = team_id,
 )
 
 # Development Profile
@@ -100,8 +106,8 @@ local_provisioning_profile(
 )
 
 xcode_provisioning_profile(
-   name = "xcode_development_profile",
-   team_id = team_id,
-   managed_by_xcode = True,
-   provisioning_profile = ":local_development_profile",
+    name = "xcode_development_profile",
+    managed_by_xcode = True,
+    provisioning_profile = ":local_development_profile",
+    team_id = team_id,
 )
