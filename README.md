@@ -44,7 +44,7 @@ To Generate Build file
 To Run
 `bazel run //backend`
 
-Generate pb.go
-`protoc --go_out=. --go_opt=module=pro.herlian/vihara \
-    --go-grpc_out=. --go-grpc_opt=module=pro.herlian/vihara \
-    proto/servicea.proto`
+Generate pb.go for development purpose
+`protoc --go_out=paths=source_relative:./backend \
+    --go-grpc_out=paths=source_relative:./backend \
+    proto/**/*.proto`
