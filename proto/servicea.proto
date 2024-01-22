@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "pro.herlian/vihara/proto";
+
+package servicea;
+
+service ServiceA {
+    rpc Sum (SumRequest) returns (SumResponse);
+}
+
+message SumRequest {
+    int32 a = 1;
+    int32 b = 2;
+}
+
+message SumResponse {
+    int32 result = 1;
+}
