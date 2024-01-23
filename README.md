@@ -43,3 +43,8 @@ To Generate Build file
 
 To Run
 `bazel run //backend`
+
+Generate pb.go for development purpose
+`protoc --go_out=paths=source_relative:./backend \
+    --go-grpc_out=paths=source_relative:./backend \
+    proto/**/*.proto`

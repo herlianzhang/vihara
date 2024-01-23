@@ -5,6 +5,7 @@ bazel-*
 .DS_Store
 Gemfile.lock
 **/fastlane/report.xml
+backend/proto
 # Eclipse
 .project
 .classpath
