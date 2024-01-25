@@ -1,11 +1,12 @@
 syntax = "proto3";
 
-option go_package = "pro.herlian/vihara/proto";
+option go_package = "pro.herlian.vihara/proto";
 
 package servicea;
 
 service ServiceA {
     rpc Sum (SumRequest) returns (SumResponse);
+    rpc SumStream (SumRequest) returns (stream SumResponse);
 }
 
 message SumRequest {

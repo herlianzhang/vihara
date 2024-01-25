@@ -1,4 +1,4 @@
-module pro.herlian/vihara
+module pro.herlian.vihara
 
 go 1.21.5
 

@@ -6,7 +6,7 @@ go_library(
         "handler.go",
         "main.go",
     ],
-    importpath = "pro.herlian/vihara/services/servicea",
+    importpath = "pro.herlian.vihara/backend/services/servicea",
     visibility = ["//visibility:private"],
     deps = [
         "//proto:servicea",

@@ -1,0 +1,4 @@
+load("@gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix pro.herlian.vihara
+gazelle(name = "gazelle")

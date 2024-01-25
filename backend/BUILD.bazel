@@ -1,13 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("@gazelle//:def.bzl", "gazelle")
-
-# gazelle:prefix pro.herlian/vihara
-gazelle(name = "gazelle")
 
 go_library(
     name = "vihara_lib",
     srcs = ["main.go"],
-    importpath = "pro.herlian/vihara",
+    importpath = "pro.herlian.vihara",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_gin_gonic_gin//:gin",
@@ -18,6 +14,18 @@ go_library(
 
 go_binary(
     name = "backend",
-    embed = [":vihara_lib"],
+    embed = [":backend_lib"],
     visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "backend_lib",
+    srcs = ["main.go"],
+    importpath = "pro.herlian.vihara/backend",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_gin_gonic_gin//:gin",
+        "@com_github_golang_jwt_jwt_v5//:jwt",
+        "@com_github_lestrrat_go_jwx_v2//jwk",
+    ],
 )
