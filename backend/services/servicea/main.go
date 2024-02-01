@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	pb "pro.herlian/vihara/proto"
+	pb "pro.herlian.vihara/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
