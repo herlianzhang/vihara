@@ -26,7 +26,7 @@ To Generate xcodeproj
 `bazel run //ios:xcodeproj`
 
 To Run Directly
-`bazel run //ios:iOSApp`
+`bazel run //ios:App`
 
 To Build signed ipa
 `bazel build \           
@@ -39,7 +39,7 @@ To Build signed ipa
 # Backend
 
 To Generate Build file
-`bazel run //backend:gazelle`
+`bazel run //:gazelle`
 
 To Run
 `bazel run //backend`
@@ -49,4 +49,11 @@ Generate pb.go for development purpose
     --go-grpc_out=paths=source_relative:./backend \
     proto/**/*.proto`
 
-protoc --swift_out=./ios --grpc-swift_out=./ios proto/servicea.proto
+`protoc --swift_out=./ios --grpc-swift_out=./ios proto/servicea.proto`
+
+Clean
+`bazel clean --expunge`
+
+To Run frontend admin for development purposes
+`cd frontend/admin`
+`npm start`
