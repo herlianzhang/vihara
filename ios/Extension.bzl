@@ -21,7 +21,7 @@ def ios_app(
         minimum_os_version = "15.0",
         visibility = ["//visibility:public"],
         deps = [
-            ":Lib",
+            "//ios/Sources",
         ],
         provisioning_profile = provisioning_profile,
     )

@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "user-service_lib",
+    srcs = ["main.go"],
+    data = ["local.env"],
+    importpath = "pro.herlian.vihara/backend/services/user-service",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//backend/services/user-service/db",
+        "//backend/services/user-service/repository",
+        "//backend/services/user-service/rest",
+        "@com_github_gin_gonic_gin//:gin",
+        "@com_github_go_playground_validator_v10//:validator",
+        "@com_github_jackc_pgx_v5//:pgx",
+        "@com_github_joho_godotenv//:godotenv",
+    ],
+)
+
+go_binary(
+    name = "user-service",
+    embed = [":user-service_lib"],
+    visibility = ["//visibility:public"],
+)

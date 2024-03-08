@@ -5,7 +5,7 @@
 	<key>authCredentials</key>
 	<dict>
 		<key>issuer</key>
-		<string>http://192.168.1.10:8080/realms/vihara</string>
+		<string>http://192.168.68.106:8080/realms/vihara</string>
 		<key>clientId</key>
 		<string>ios-app</string>
 	</dict>

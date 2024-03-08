@@ -13,8 +13,9 @@ load(
     "apple_dynamic_xcframework_import",
     "local_provisioning_profile",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 load(":Extension.bzl", "ios_app", "team_id")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@rules_swift_package_manager//swiftpkg:defs.bzl", "swift_update_packages")
 
 xcodeproj(
     name = "xcodeproj",
@@ -43,22 +44,10 @@ ios_app(
     provisioning_profile = ":xcode_appstore_profile",
 )
 
-swift_library(
-    name = "Lib",
-    srcs = glob(["Sources/*.swift"]),
-    data = [
-        "Resources/Vihara.plist",
-    ],
-    tags = ["manual"],
-    deps = [
-        ":AppAuth",
-        "//proto:swift_servicea",
-    ],
-)
-
 apple_dynamic_xcframework_import(
     name = "AppAuth",
     tags = ["manual"],
+    visibility = ["//visibility:public"],
     xcframework_imports = glob(["Carthage/Build/AppAuth.xcframework/**"]),
 )
 
@@ -68,14 +57,7 @@ ios_unit_test(
     minimum_os_version = "15.0",
     test_host = ":App",
     visibility = ["//visibility:public"],
-    deps = [":TestLib"],
-)
-
-swift_library(
-    name = "TestLib",
-    testonly = True,
-    srcs = glob(["test/*.swift"]),
-    tags = ["manual"],
+    deps = ["//ios/test:TestLib"],
 )
 
 # AppStore Profile
@@ -104,4 +86,25 @@ xcode_provisioning_profile(
     managed_by_xcode = True,
     provisioning_profile = ":local_development_profile",
     team_id = team_id,
+)
+
+gazelle_binary(
+    name = "gazelle_bin",
+    languages = [
+        "@rules_swift_package_manager//gazelle",
+    ],
+)
+
+swift_update_packages(
+    name = "swift_update_pkgs",
+    gazelle = ":gazelle_bin",
+    generate_swift_deps_for_workspace = False,
+    package_manifest = "ios/Package.swift",
+    swift_deps_index = "ios/swift_deps_index.json",
+    update_bzlmod_stanzas = True,
+)
+
+gazelle(
+    name = "update_build_files",
+    gazelle = ":gazelle_bin",
 )

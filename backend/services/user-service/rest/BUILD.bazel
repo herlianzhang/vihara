@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rest",
+    srcs = ["user.go"],
+    importpath = "pro.herlian.vihara/backend/services/user-service/rest",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//backend/services/user-service/model",
+        "//backend/services/user-service/repository",
+        "//backend/shared:shared_lib",
+        "@com_github_gin_gonic_gin//:gin",
+        "@com_github_go_playground_validator_v10//:validator",
+        "@com_github_golang_jwt_jwt_v5//:jwt",
+        "@com_github_jackc_pgx_v5//:pgx",
+    ],
+)

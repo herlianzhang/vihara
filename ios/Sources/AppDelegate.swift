@@ -5,8 +5,8 @@
 //  Created by Herlian H on 10/01/24.
 //
 
-import UIKit
 import AppAuth
+import GoogleSignIn
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

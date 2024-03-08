@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "repository",
+    srcs = ["user.go"],
+    importpath = "pro.herlian.vihara/backend/services/user-service/repository",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//backend/services/user-service/db",
+        "//backend/services/user-service/model",
+        "@com_github_jackc_pgx_v5//:pgx",
+        "@com_github_jackc_pgx_v5//pgtype",
+    ],
+)
