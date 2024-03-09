@@ -47,7 +47,7 @@ To Run
 Generate pb.go for development purpose
 `protoc --go_out=paths=source_relative:./backend \
     --go-grpc_out=paths=source_relative:./backend \
-    proto/**/*.proto`
+    backend/proto/**/*.proto`
 
 `protoc --swift_out=./ios --grpc-swift_out=./ios proto/servicea.proto`
 
