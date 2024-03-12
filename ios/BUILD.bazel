@@ -57,7 +57,7 @@ ios_unit_test(
     minimum_os_version = "15.0",
     test_host = ":App",
     visibility = ["//visibility:public"],
-    deps = ["//ios/test:TestLib"],
+    deps = ["//ios/Test"],
 )
 
 # AppStore Profile

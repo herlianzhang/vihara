@@ -1,5 +1,4 @@
 *~
-MODULE.bazel.lock
 bazel-*
 .idea
 .DS_Store
@@ -17,5 +16,3 @@ target/
 **/Carthage
 *.xcodeproj
 node_modules
-# Go
-go.sum

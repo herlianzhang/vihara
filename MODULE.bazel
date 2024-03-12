@@ -68,7 +68,6 @@ use_repo(
     "com_github_golang_jwt_jwt_v5",
     "com_github_lestrrat_go_jwx_v2",
     "org_golang_google_grpc",
-    "org_uber_go_zap",
     "org_golang_google_protobuf",
     "com_github_jackc_pgx_v5",
     "com_github_go_playground_validator_v10",

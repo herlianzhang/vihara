@@ -1,9 +1,10 @@
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_test")
 
 swift_test(
-    name = "TestLib",
+    name = "Test",
     testonly = True,
     srcs = glob(["*.swift"]),
     module_name = "test",
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )

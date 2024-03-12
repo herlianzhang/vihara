@@ -7,12 +7,8 @@ pipeline {
                 sh '''
                 #!/bin/zsh
                 source ~/.jenkins_profile
-                protoc --go_out=paths=source_relative:./backend --go-grpc_out=paths=source_relative:./backend proto/**/*.proto
                 cd ios
                 carthage bootstrap --use-xcframeworks --platform iOS
-                cd ..
-                cd backend
-                bazel run @io_bazel_rules_go//go mod tidy
                 cd ..
                 bazel build //...
                 '''
