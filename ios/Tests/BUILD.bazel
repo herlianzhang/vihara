@@ -1,10 +1,11 @@
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 swift_library(
-    name = "Sources",
-    srcs = glob(["*.swift"]),
-    data = ["Vihara.plist"],
+    name = "Tests",
+    testonly = True,
+    srcs = [
+        "HelloWorldSwiftTests.swift",
+    ],
     tags = ["manual"],
     visibility = ["//visibility:public"],
-    deps = ["@swiftpkg_googlesignin_ios//:GoogleSignIn"],
 )

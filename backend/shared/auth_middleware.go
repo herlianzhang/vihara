@@ -32,8 +32,8 @@ func NewJWKSet(jwkUrl string) (jwk.Set, error) {
 }
 
 const (
-	googleIssuer = "https://accounts.google.com"
-	appleIssuer  = "https://appleid.apple.com"
+	googleIssuer       = "https://accounts.google.com"
+	appleIssuer        = "https://appleid.apple.com"
 	googlePublicKeyURL = "https://www.googleapis.com/oauth2/v3/certs"
 	applePublicKeyURL  = "https://appleid.apple.com/auth/keys"
 )
@@ -45,29 +45,29 @@ func getPublicKey(token *jwt.Token) (interface{}, error) {
 		return nil, err
 	}
 	switch issuer {
-		case googleIssuer:
-			url = googlePublicKeyURL
-		case appleIssuer:
-			url = applePublicKeyURL
-		default:
-			return nil, fmt.Errorf("unknown issuer")
+	case googleIssuer:
+		url = googlePublicKeyURL
+	case appleIssuer:
+		url = applePublicKeyURL
+	default:
+		return nil, fmt.Errorf("unknown issuer")
 	}
 	keySet, err := NewJWKSet(url)
+	if err != nil {
+		return nil, err
+	}
+
+	keyID, _ := token.Header["kid"].(string)
+	if key, ok := keySet.LookupKeyID(keyID); ok {
+		var result rsa.PublicKey
+		err := key.Raw(&result)
 		if err != nil {
 			return nil, err
 		}
+		return &result, nil
+	}
 
-		keyID, _ := token.Header["kid"].(string)
-		if key, ok := keySet.LookupKeyID(keyID); ok {
-			var result rsa.PublicKey
-			err := key.Raw(&result)
-			if err != nil {
-				return nil, err
-			}
-			return &result, nil
-		}
-
-		return nil, fmt.Errorf("unable to find key")
+	return nil, fmt.Errorf("unable to find key")
 }
 
 func verifyToken(bearerToken string) (interface{}, error) {

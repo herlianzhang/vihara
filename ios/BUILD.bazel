@@ -30,7 +30,7 @@ xcodeproj(
                 "simulator",
             ],
         ),
-        ":Tests",
+        ":UnitTests",
     ],
 )
 
@@ -52,12 +52,11 @@ apple_dynamic_xcframework_import(
 )
 
 ios_unit_test(
-    name = "Tests",
+    name = "UnitTests",
     bundle_id = "pro.herlian.vihara.tests",
     minimum_os_version = "15.0",
-    test_host = ":App",
     visibility = ["//visibility:public"],
-    deps = ["//ios/Test"],
+    deps = ["//ios/Tests"],
 )
 
 # AppStore Profile
