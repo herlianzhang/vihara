@@ -46,14 +46,15 @@ pipeline {
             }
         }
         stage('Deploy Android') {
-            // when { 
-            //     expression { env.BRANCH_NAME == 'main' }
-            // }
+            when { 
+                expression { env.BRANCH_NAME == 'main' }
+            }
             environment {
                 KEYSTORE_PATH = credentials('keystore_path')
                 KEYSTORE_PASSWORD = credentials('keystore_password')
                 BACKEND_URL = credentials('backend_url')
                 GOOGLE_CLIENT_ID = credentials('google_client_id_for_android')
+                JSON_KEY_PATH = credentials('android_json_key_path')
             }
             steps {
                 sh './android/scripts/deploy.sh'

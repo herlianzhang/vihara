@@ -16,7 +16,7 @@
 default_platform(:android)
 
 platform :android do
-  desc "Description of what the lane does"
+
   lane :deploy do
     upload_to_play_store(
       track: 'internal',
@@ -26,11 +26,8 @@ platform :android do
 
   lane :change_version_code do
     result = google_play_track_version_codes(
-      track: 'internal'
+      track: 'internal',
     )
-    puts result
-    # ENV["BUILD_NUMBER"] = result.to_s
-    # sh("pwd")
     sh("../scripts/change_version_code.sh #{result[0] + 1}")
   end
 

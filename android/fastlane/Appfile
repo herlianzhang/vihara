@@ -5,5 +5,5 @@
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
 
-json_key_file("/Users/herlian.h/Downloads/vihara-id-a3f1d89c583a.json")
 package_name("pro.herlian.vihara")
+json_key_file(ENV["JSON_KEY_PATH"])
