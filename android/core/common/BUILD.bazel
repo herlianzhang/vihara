@@ -1,0 +1,13 @@
+load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
+
+kt_android_library(
+    name = "common",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    custom_package = "pro.herlian.vihara.core.common",
+    manifest = "src/main/AndroidManifest.xml",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx_lifecycle_lifecycle_viewmodel_ktx",
+        "@maven//:com_google_dagger_dagger_android",
+    ],
+)

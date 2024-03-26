@@ -9,6 +9,9 @@ export `ANDROID_HOME` variable
 on mac `export ANDROID_HOME=$HOME/Library/Android/sdk`
 on linux `export ANDROID_HOME=$HOME/Android/Sdk/`
 
+To Update maven_install.json (this was source of truth)
+`bazel run @unpinned_maven//:pin`
+
 To Build
 `bazel build //android/app:compose_app`
 
@@ -55,3 +58,6 @@ Clean
 To Run frontend admin for development purposes
 `cd frontend/admin`
 `npm start`
+
+`bazel build --compilation_mode=opt //android/app:android_app_aab`
+`apksigner sign --ks my-release-key.keystore --ks-key-alias alias_name --min-sdk-version=24 bazel-bin/android/app/android_app.aab`

@@ -1,3 +1,9 @@
 workspace(name = "pro_herlian_vihara")
 
-android_sdk_repository(name = "androidsdk")
+load("//android:deps.bzl", "download_app_bundle_dependencies")
+
+download_app_bundle_dependencies()
+
+android_sdk_repository(
+    name = "androidsdk",
+)

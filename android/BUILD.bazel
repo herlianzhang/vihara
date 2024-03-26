@@ -1,4 +1,5 @@
-load("@rules_kotlin//kotlin:core.bzl", "kt_compiler_plugin")
+load("@bazel_tools//tools/jdk:default_java_toolchain.bzl", "default_java_toolchain")
+load("@rules_kotlin//kotlin:core.bzl", "kt_compiler_plugin", "define_kt_toolchain")
 
 kt_compiler_plugin(
     name = "jetpack_compose_compiler_plugin",
@@ -8,4 +9,41 @@ kt_compiler_plugin(
     deps = [
         "@maven//:androidx_compose_compiler_compiler",
     ],
+)
+
+java_plugin(
+    name = "dagger-android-processor",
+    generates_api = 1,
+    visibility = ["//visibility:public"],
+    processor_class = "dagger.android.processor.AndroidProcessor",
+    deps = [
+        "@maven//:com_google_dagger_dagger_android_processor",
+    ],
+)
+
+java_plugin(
+    name = "dagger-compiler",
+    generates_api = 1,
+    visibility = ["//visibility:public"],
+    processor_class = "dagger.internal.codegen.ComponentProcessor",
+    deps = [
+        "@maven//:com_google_dagger_dagger_compiler",
+    ],
+)
+
+default_java_toolchain(
+    name = "java_toolchain",
+    visibility = ["//visibility:public"],
+)
+
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    jvm_target = "1.8",
+)
+
+java_binary(
+    name = "bundletool",
+    main_class = "com.android.tools.build.bundletool.BundleToolMain",
+    visibility = ["//visibility:public"],
+    runtime_deps = ["@bundletool_all//jar"],
 )
