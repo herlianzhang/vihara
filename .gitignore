@@ -12,6 +12,7 @@ backend/proto
 # Android
 .aswb
 target/
+android/app/BundleConfig.pb.json
 # Xcode
 **/Carthage
 *.xcodeproj

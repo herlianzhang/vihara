@@ -45,6 +45,20 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy Android') {
+            // when { 
+            //     expression { env.BRANCH_NAME == 'main' }
+            // }
+            environment {
+                KEYSTORE_PATH = credentials('keystore_path')
+                KEYSTORE_PASSWORD = credentials('keystore_password')
+                BACKEND_URL = credentials('backend_url')
+                GOOGLE_CLIENT_ID = credentials('google_client_id_for_android')
+            }
+            steps {
+                sh './android/scripts/deploy.sh'
+            }
+        }
         // stage('Test') {
         //     environment {
         //         CODECOV_TOKEN = credentials('codecov_token')

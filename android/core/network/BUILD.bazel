@@ -1,0 +1,22 @@
+load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
+kt_android_library(
+    name = "network",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    custom_package = "pro.herlian.vihara.core.network",
+    manifest = "src/main/AndroidManifest.xml",
+    plugins = [
+        "//android:dagger-compiler",
+        "//android:dagger-android-processor",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//android/core/common",
+        "@maven//:com_squareup_retrofit2_retrofit",
+        "@maven//:com_squareup_retrofit2_converter_gson",
+        "@maven//:com_google_code_gson_gson",
+        "@maven//:com_squareup_okhttp3_okhttp",
+        "@maven//:com_squareup_okhttp3_logging_interceptor",
+        "@maven//:com_github_chuckerteam_chucker_library",
+        "@maven//:com_google_dagger_dagger_android",
+    ],
+)

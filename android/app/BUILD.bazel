@@ -1,12 +1,80 @@
 load("@rules_android//android:rules.bzl", "android_binary")
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
+load("//android:android_application.bzl", "android_application", "deployable_android_application")
+load("//android:deps.bzl", "ANDROID_LIB")
 
-# An app that consumes android-kt deps
-android_binary(
-    name = "compose_app",
+filegroup(
+    name = "compose_ui_proguard_rules",
+    srcs = ["proguard-rules.pro"],
+)
+
+kt_android_library(
+    name = "lib",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
     custom_package = "pro.herlian.vihara",
-    manifest = "AndroidManifest.xml",
-    visibility = ["//visibility:public"],
-    deps = [
-        "//android/compose-ui:lib",
+    manifest = "src/main/AndroidManifest.xml",
+    plugins = [
+        "//android:jetpack_compose_compiler_plugin",
+        "//android:dagger-compiler",
+        "//android:dagger-android-processor",
+    ],
+    proguard_specs = [":compose_ui_proguard_rules"],
+    deps = ANDROID_LIB + [
+        "//android/core/common",
+        "//android/core/network",
+        "//android/feature/auth",
+        "@maven//:androidx_credentials_credentials_play_services_auth",
+        "@maven//:com_google_android_libraries_identity_googleid_googleid",
+        "@maven//:com_squareup_retrofit2_retrofit",
+        "@maven//:com_squareup_retrofit2_converter_gson",
+        "@maven//:com_google_code_gson_gson",
+        "@maven//:com_jakewharton_timber_timber",
+        "@maven//:com_squareup_okhttp3_okhttp",
+        "@maven//:com_squareup_okhttp3_logging_interceptor",
+        "@maven//:com_github_chuckerteam_chucker_library",
     ],
 )
+
+android_binary(
+    name = "app",
+    custom_package = "pro.herlian.vihara",
+    manifest = "src/main/AndroidManifest.xml",
+    visibility = ["//visibility:public"],
+    manifest_values = {
+        "appName": "ViharaDebug",
+        "versionCode": "1",
+        "versionName": "1.0",
+        "debuggable": "false",
+        "minSdkVersion": "24",
+        "targetSdkVersion": "33",
+    },
+    deps = [
+        ":lib",
+    ],
+)
+
+# will uncommented by CI
+##android_application(
+##    name = "android_app",
+##    custom_package = "pro.herlian.vihara",
+##    manifest = "src/main/AndroidManifest.xml",
+##    app_bundle_config_file = "BundleConfig.pb.json",
+##    proguard_generate_mapping = False,
+##    manifest_values = {
+##        "appName": "Vihara",
+##        "versionCode": "__VERSION_CODE__", # will be replaced by CI
+##        "versionName": "1.0",
+##        "debuggable": "false",
+##        "minSdkVersion": "24",
+##        "targetSdkVersion": "33",
+##    },
+##    deps = [
+##        ":lib",
+##    ],
+##)
+
+##deployable_android_application(
+##    name = "install_android_app_aab",
+##    aab_target = ":android_app_aab",
+##)

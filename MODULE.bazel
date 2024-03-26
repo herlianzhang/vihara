@@ -1,14 +1,15 @@
 module(name = "vihara", version = "0.0.1")
 
-_COMPOSE_VERSION = "1.2.1"
+_COMPOSE_VERSION = "1.6.3"
 
-_COMPOSE_COMPILER_VERSION = "1.5.3"
+_COMPOSE_COMPILER_VERSION = "1.5.8"
 
-_KOTLIN_COMPILER_VERSION = "1.9.10"
+_KOTLIN_COMPILER_VERSION = "1.9.22"
 
 bazel_dep(name = "rules_jvm_external", version = "6.0")
+bazel_dep(name = "rules_kotlin", version = "1.9.1")
+bazel_dep(name = "rules_java", version = "7.5.0")
 bazel_dep(name = "rules_android", version = "0.1.1")
-bazel_dep(name = "rules_kotlin", version = "1.9.0")
 
 bazel_dep(name = "rules_xcodeproj", version = "1.16.0")
 bazel_dep(name = "rules_apple", version = "3.3.0", repo_name = "build_bazel_rules_apple")
@@ -30,21 +31,53 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
         "org.jetbrains.kotlin:kotlin-stdlib:{}".format(_KOTLIN_COMPILER_VERSION),
-        "androidx.core:core-ktx:1.7.0",
-        "androidx.appcompat:appcompat:1.4.1",
-        "androidx.activity:activity-compose:1.4.0",
-        "androidx.compose.material:material:{}".format(_COMPOSE_VERSION),
+        "androidx.core:core-ktx:1.12.0",
+        "androidx.appcompat:appcompat:1.6.1",
+        "androidx.activity:activity-compose:1.7.0",
+        "androidx.emoji2:emoji2:1.3.0",
+        "androidx.compose.material3:material3:1.2.1",
+        "androidx.lifecycle:lifecycle-runtime:2.6.1",
+        "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1",
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1",
+        "androidx.compose.material:material-icons-core:1.6.0",
+        "androidx.compose.material:material-ripple:1.6.0",
         "androidx.compose.ui:ui:{}".format(_COMPOSE_VERSION),
         "androidx.compose.ui:ui-tooling:{}".format(_COMPOSE_VERSION),
+        "androidx.compose.ui:ui-graphics:{}".format(_COMPOSE_VERSION),
+        "androidx.compose.foundation:foundation:{}".format(_COMPOSE_VERSION),
         "androidx.compose.compiler:compiler:{}".format(_COMPOSE_COMPILER_VERSION),
         "androidx.compose.runtime:runtime:{}".format(_COMPOSE_VERSION),
+        "androidx.collection:collection:1.4.0",
+        "androidx.credentials:credentials:1.2.1",
+        "androidx.credentials:credentials-play-services-auth:1.2.1",
+        "com.google.android.libraries.identity.googleid:googleid:1.1.0",
+        "com.squareup.retrofit2:retrofit:2.9.0",
+        "com.squareup.retrofit2:converter-gson:2.9.0",
+        "com.google.code.gson:gson:2.10.1",
+        "com.jakewharton.timber:timber:5.0.1",
+        "androidx.activity:activity-ktx:1.7.0",
+        "com.github.chuckerteam.chucker:library:4.0.0",
+        "com.squareup.okhttp3:okhttp:4.12.0",
+        "com.squareup.okhttp3:logging-interceptor:4.12.0",
+        "androidx.test:core:1.1.0",
+        "com.google.dagger:dagger-compiler:2.51",
+        "com.google.dagger:dagger-android-processor:2.51",
+        "com.google.dagger:dagger-android:2.51",
+        "com.google.dagger:dagger-android-support:2.51",
+        "androidx.navigation:navigation-compose:2.7.7",
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1",
+        "androidx.lifecycle:lifecycle-runtime-compose:2.6.1",
+        "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1",
     ],
     repositories = [
         "https://maven.google.com",
         "https://repo1.maven.org/maven2",
+        "https://oss.sonatype.org/content/repositories/snapshots",
     ],
+    lock_file = "//android:maven_install.json",
+    version_conflict_policy = "pinned",
 )
-use_repo(maven, "maven")
+use_repo(maven, "maven", "unpinned_maven")
 
 go_sdk = use_extension(
     "@io_bazel_rules_go//go:extensions.bzl", 

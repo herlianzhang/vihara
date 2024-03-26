@@ -1,0 +1,19 @@
+load("@rules_kotlin//kotlin:android.bzl", "kt_android_library")
+load("//android:deps.bzl", "ANDROID_LIB")
+
+kt_android_library(
+    name = "auth",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    custom_package = "pro.herlian.vihara.feature.auth",
+    manifest = "src/main/AndroidManifest.xml",
+    visibility = ["//visibility:public"],
+    plugins = [
+        "//android:jetpack_compose_compiler_plugin",
+    ],
+    proguard_specs = [":compose_ui_proguard_rules"],
+    deps = ANDROID_LIB + [
+        "//android/core/common",
+        "//android/core/network",
+        "@maven//:com_jakewharton_timber_timber",
+    ],
+)
