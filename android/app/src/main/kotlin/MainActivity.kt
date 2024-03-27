@@ -2,29 +2,23 @@ package pro.herlian.vihara
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.compose.runtime.getValue
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pro.herlian.vihara.di.AppComponent
 import pro.herlian.vihara.feature.auth.AuthActivity
 import pro.herlian.vihara.ui.CredentialViewModel
-import pro.herlian.vihara.ui.ViharaApp
 import pro.herlian.vihara.ui.rememberViharaAppState
 import javax.inject.Inject
 

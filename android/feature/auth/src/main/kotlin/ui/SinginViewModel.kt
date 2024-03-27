@@ -9,10 +9,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SigninViewModel @Inject constructor(
-    val networkDataSource: ViharaNetworkDataSource
+    private val networkDataSource: ViharaNetworkDataSource
 ): ViewModel() {
     init {
-        Timber.d("Masuk pak eko dari singin")
         getUsers()
     }
 

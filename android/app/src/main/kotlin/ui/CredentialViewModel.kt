@@ -17,25 +17,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import pro.herlian.vihara.APIService
 import pro.herlian.vihara.Credential
-import pro.herlian.vihara.User
 import pro.herlian.vihara.core.common.env.Env
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
-class MantapPak @Inject constructor() {
-    fun printMasukPakeko() {
-        Timber.d("Masuk pak eko")
-    }
-}
-
-class CredentialViewModel @Inject constructor(application: Application, mantapPak: MantapPak): AndroidViewModel(application) {
-    private val service = APIService.getInstance(APIService.getClient(application))
+class CredentialViewModel @Inject constructor(application: Application): AndroidViewModel(application) {
     private val _isSignedIn = MutableStateFlow(Credential.isSignedIn())
     val isSignedIn: StateFlow<Boolean> = _isSignedIn.asStateFlow()
 
@@ -52,11 +39,6 @@ class CredentialViewModel @Inject constructor(application: Application, mantapPa
     private val request: GetCredentialRequest = GetCredentialRequest.Builder()
         .addCredentialOption(googleIdOption)
         .build()
-
-    init {
-        mantapPak.printMasukPakeko()
-        fetchUsers()
-    }
 
     fun signIn(context: Context) {
         viewModelScope.launch {
@@ -83,23 +65,6 @@ class CredentialViewModel @Inject constructor(application: Application, mantapPa
                 Timber.e("Error getting credential", e)
             }
         }
-    }
-
-    private fun fetchUsers() {
-        val call = service.listUsers()
-
-        call.enqueue(object : Callback<List<User>> {
-            override fun onResponse(p0: Call<List<User>>, p1: Response<List<User>>) {
-                if (p1.isSuccessful) {
-                    val user = p1.body()
-                    Timber.d(user?.toString() ?: "")
-                }
-            }
-
-            override fun onFailure(p0: Call<List<User>>, p1: Throwable) {
-                Timber.e("Error to fetch users", p1)
-            }
-        })
     }
 
     fun logout() {
