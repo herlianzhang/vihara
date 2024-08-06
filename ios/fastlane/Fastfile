@@ -28,15 +28,38 @@ platform :ios do
 
   lane :update_build_number_for_testflight do
     sign_to_appconnect
+    hardcodedSHA256 = "14cdbe80dc024fe4c2122b0350871ac142f11f5a525e1d2c4ff1c8498b6eb988"
 
-    last_num = latest_testflight_build_number(
-      app_identifier: ENV['APP_IDENTIFIER'],
-    )
+    my_hash = {
+      appId: ENV['APP_IDENTIFIER'],
+      sha256: hardcodedSHA256
+    }
+
+    puts "Hash before encoded #{my_hash}"
+
+    encoded_hash = Base64.strict_encode64(my_hash.to_json)
+
+    puts "Hash encoded: #{encoded_hash}"
+
+    build_output = `curl https://increment.build/#{encoded_hash}`
+
+    # Remove leading and trailing whitespaces from the output
+    build_number = build_output.strip
+
+    # Check if the value is a number using a regular expression
+    re = /^[0-9]+$/
+
+    if !build_number.match?(re)
+      UI.error("error: Not a number")
+      exit 1
+    end
+
+    puts "Update Build Number to: #{build_number}"
 
     set_info_plist_value(
       path: "Resources/Info.plist",
       key: "CFBundleVersion",
-      value: (last_num + 1).to_s
+      value: build_number
     )
   end
 
