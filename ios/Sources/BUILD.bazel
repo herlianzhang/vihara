@@ -6,5 +6,9 @@ swift_library(
     data = ["Vihara.plist"],
     tags = ["manual"],
     visibility = ["//visibility:public"],
-    deps = ["@swiftpkg_googlesignin_ios//:GoogleSignIn"],
+    deps = [
+        "@swiftpkg_googlesignin_ios//:GoogleSignIn",
+        "//ios:Moya",
+        "//ios:Alamofire",
+    ],
 )

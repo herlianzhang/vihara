@@ -51,6 +51,20 @@ apple_dynamic_xcframework_import(
     xcframework_imports = glob(["Carthage/Build/AppAuth.xcframework/**"]),
 )
 
+apple_dynamic_xcframework_import(
+    name = "Moya",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    xcframework_imports = glob(["Carthage/Build/Moya.xcframework/**"]),
+)
+
+apple_dynamic_xcframework_import(
+    name = "Alamofire",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    xcframework_imports = glob(["Carthage/Build/Alamofire.xcframework/**"]),
+)
+
 ios_unit_test(
     name = "UnitTests",
     bundle_id = "pro.herlian.vihara.tests",

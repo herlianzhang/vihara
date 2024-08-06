@@ -7,8 +7,19 @@
 
 import SwiftUI
 import GoogleSignIn
+import Moya
+
+struct User: Decodable {
+    let user_id: String
+    let username: String
+    let google_id: String?
+    let apple_id: String?
+    let email: String?
+    let avatar: String?
+}
 
 struct LoginView: View {
+    let provider = MoyaProvider<APIService>(plugins: [NetworkLoggerPlugin()])
     @EnvironmentObject var userAuth: UserAuth
     var body: some View {
         VStack {
@@ -18,11 +29,24 @@ struct LoginView: View {
 
             Text("Welcome to test")
             Button("Login") {
-                signIn()
+                getsomething()
+//                signIn()
 //                userAuth.login()
             }
         }
         .padding()
+    }
+
+    func getsomething() {
+        provider.request(.getUser) { result in
+            switch result {
+            case .success(let response):
+                guard let users = try? JSONDecoder().decode([User].self, from: response.data) else { return }
+                print("Masuk pak eko \(users)")
+            case .failure(let error):
+                print("Masuk error \(error)")
+            }
+        }
     }
 
     func signIn() {
